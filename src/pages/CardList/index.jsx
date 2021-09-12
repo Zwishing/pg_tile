@@ -1,13 +1,12 @@
-import { Card, Avatar } from 'antd';
+import { Card } from 'antd';
 import { EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
-import styles from './index.less';
+// import styles from './index.less';
 import {memo} from 'react';
 
 const CardList = memo((props) => {
 
     const { Meta } = Card;
     const {id,mapInfo,setActiveId} = props;
-    console.log(id,mapInfo);
     return (
         <Card className='cardList'
             style={{ width: 300 }}
@@ -26,8 +25,8 @@ const CardList = memo((props) => {
         >
             <Meta
                 // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title={mapInfo.cname}
-                description={`${mapInfo.cname}的矢量服务`}
+                title={mapInfo.id}
+                description={`${mapInfo.id}的矢量服务`}
             />
         </Card>
     );

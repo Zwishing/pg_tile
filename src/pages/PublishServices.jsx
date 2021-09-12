@@ -2,27 +2,24 @@ import React, { useRef } from 'react';
 import ProForm, {
   StepsForm,
   ProFormText,
-  ProFormDatePicker,
   ProFormRadio,
   ProFormSwitch,
-  ProFormSelect,
-  ProFormTextArea,
-  ProFormCheckbox,
-  ProFormDateRangePicker,
   ProFormSlider,
 } from '@ant-design/pro-form';
 import ProCard from '@ant-design/pro-card';
 import { message, Upload, Button, Result } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { InboxOutlined } from '@ant-design/icons';
-import { useIntl } from 'umi';
+import {connect} from 'umi';
+import './PublishServices.css';
 
 const { Dragger } = Upload;
 
 const draggerProps = {
+  accept: '.geojson,.zip,.7z,.tar,.kml,',
   name: 'file',
   multiple: true,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  action: 'http://localhost:8001/publish/upload',
   style: {
     marginBottom: 24,
   },
@@ -49,9 +46,10 @@ const waitTime = (time = 100) => {
     }, time);
   });
 };
-export default () => {
+
+const PublishServices =() => {
   const formRef = useRef();
-  const intl = useIntl();
+  // const intl = useIntl();
   return (
     <PageContainer>
       <ProCard>
@@ -64,27 +62,48 @@ export default () => {
           },
         }}
           submitter={{
+            // eslint-disable-next-line no-shadow
             render: (props) => {
               if (props.step === 0) {
-                return (<Button type="primary" onClick={() => { var _a; return (_a = props.onSubmit) === null || _a === void 0 ? void 0 : _a.call(props); }}>
+                return (<Button type="primary" onClick={() => {
+                  // eslint-disable-next-line no-underscore-dangle
+                  let _a;
+                  // eslint-disable-next-line no-return-assign,no-cond-assign,no-void
+                  return (_a = props.onSubmit) === null || _a === void 0 ? void 0 : _a.call(props); }}>
                   下一步 {'>'}
                 </Button>);
               }
               if (props.step === 1) {
                 return [
-                  <Button key="pre" onClick={() => { var _a; return (_a = props.onPre) === null || _a === void 0 ? void 0 : _a.call(props); }}>
+                  <Button key="pre" onClick={() => {
+                    // eslint-disable-next-line no-underscore-dangle
+                    let _a;
+                    // eslint-disable-next-line no-return-assign,no-cond-assign,no-void
+                    return (_a = props.onPre) === null || _a === void 0 ? void 0 : _a.call(props); }}>
                     {'<'}上一步
                   </Button>,
-                  <Button type="primary" key="goToTree" onClick={() => { var _a; return (_a = props.onSubmit) === null || _a === void 0 ? void 0 : _a.call(props); }}>
+                  <Button type="primary" key="goToTree" onClick={() => {
+                    // eslint-disable-next-line no-underscore-dangle
+                    let _a;
+                    // eslint-disable-next-line no-void,no-return-assign,no-cond-assign
+                    return (_a = props.onSubmit) === null || _a === void 0 ? void 0 : _a.call(props); }}>
                     发布
                   </Button>,
                 ];
               }
               return [
-                <Button key="gotoTwo" onClick={() => { var _a; return (_a = props.onPre) === null || _a === void 0 ? void 0 : _a.call(props); }}>
+                <Button key="gotoTwo" onClick={() => {
+                  // eslint-disable-next-line no-underscore-dangle
+                  let _a;
+                  // eslint-disable-next-line no-cond-assign,no-return-assign,no-void
+                  return (_a = props.onPre) === null || _a === void 0 ? void 0 : _a.call(props); }}>
                   {'<'} 再发一次
                 </Button>,
-                <Button type="primary" key="goToTree" onClick={() => { var _a; return (_a = props.onSubmit) === null || _a === void 0 ? void 0 : _a.call(props); }}>
+                <Button type="primary" key="goToTree" onClick={() => {
+                  // eslint-disable-next-line no-underscore-dangle
+                  let _a;
+                  // eslint-disable-next-line no-return-assign,no-cond-assign,no-void
+                  return (_a = props.onSubmit) === null || _a === void 0 ? void 0 : _a.call(props); }}>
                   查看结果
                 </Button>,
               ];
@@ -94,7 +113,9 @@ export default () => {
           <StepsForm.StepForm name="base" title="上传矢量数据" stepProps={{
             description: '',
           }} onFinish={async () => {
-            var _a;
+            // eslint-disable-next-line no-underscore-dangle
+            let _a;
+            // eslint-disable-next-line no-cond-assign,no-void
             console.log((_a = formRef.current) === null || _a === void 0 ? void 0 : _a.getFieldsValue());
             await waitTime(2000);
             return true;
@@ -105,21 +126,23 @@ export default () => {
               </p>
               <p className="ant-upload-text">点击或者拖到到此区域进行上传</p>
               <p className="ant-upload-hint">
-                目前只支持geojson、shp（zip）、kml等格式
+                目前只支持geojson、shp（zip、7z、tar）、kml等格式
               </p>
             </Dragger>
           </StepsForm.StepForm>
           <StepsForm.StepForm name="checkbox" title="发布矢量数据" stepProps={{
             description: '',
           }} onFinish={async () => {
-            var _a;
+            // eslint-disable-next-line no-underscore-dangle
+            let _a;
+            // eslint-disable-next-line no-void,no-cond-assign
             console.log((_a = formRef.current) === null || _a === void 0 ? void 0 : _a.getFieldsValue());
             return true;
           }}>
-            <ProFormRadio.Group name="radio" 
-                                label="矢量分表-(大数据量时建议分表)" 
-                                width="lg" 
-                                options={['0', '2', '4', '6', '8']} 
+            <ProFormRadio.Group name="radio"
+                                label="矢量分表-(大数据量时建议分表)"
+                                width="lg"
+                                options={['0', '2', '4', '6', '8']}
                                 defaultValue={'0'}/>
             <ProForm.Group>
               <ProFormSwitch name="switch" label="矢量瓦片缓存" />
@@ -155,3 +178,5 @@ export default () => {
       </ProCard>
     </PageContainer>);
 };
+
+export default connect(({ uploadFile }) => ({ uploadFile }))(PublishServices);

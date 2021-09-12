@@ -1,18 +1,18 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Typography, Avatar, Col, Row } from 'antd';
-import { connect, useIntl, FormattedMessage, } from 'umi';
-import styles from './FeatureServices.less';
+import { Col, Row } from 'antd';
+import { connect, } from 'umi';
+// import styles from './FeatureServices.less';
 import CardList from '@/pages/CardList';
 import MapWindow from '@/pages/MapWindow';
-import { useState, useEffect,useMemo,useCallback} from 'react'
+import { useState, useEffect,useCallback} from 'react'
 
 
 const FeatureServices = (props) => {
 
   const { dispatch, featureServices } = props;
   const { featureServicesData } = featureServices;
-  const intl = useIntl();
+  // const intl = useIntl();
   const [activeId, setActiveId] = useState(-1);// MapWindow开启和关闭的状态
 
   const handleId = useCallback((id)=>{
@@ -21,13 +21,16 @@ const FeatureServices = (props) => {
 
   useEffect(() => {
     dispatch({
-      type: 'featureServices/fetchFeatureServices', //命名空间（featureServices）下的fetchFeatureServices方法
+      type: 'featureServices/fetchFeatureServices', // 命名空间（featureServices）下的fetchFeatureServices方法
       payload: null,
     });
   }, []);
 
   return (
     <PageContainer>
+      <Row>
+        <Col></Col>
+      </Row>
       <Row gutter={[16, 16]}>
         {featureServicesData.data.map((mapInfo, id) => {
           return (
@@ -48,7 +51,7 @@ const FeatureServices = (props) => {
               }
             </Col>
           )
-        })};
+        })}
       </Row>
     </PageContainer >)
 };

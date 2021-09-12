@@ -1,8 +1,8 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import {Card, Alert, Typography, Row, Col, Select, Form, Button} from 'antd';
-import { useIntl, FormattedMessage } from 'umi';
-import styles from './FeatureServices.less';
+import {Card, Row, Col, Select, Form, Button} from 'antd';
+// import { useIntl } from 'umi';
+// import styles from './FeatureServices.less';
 import MonacoEditor from 'react-monaco-editor';
 import {useState} from "react";
 import defaultSetting from "../../config/defaultSettings";
@@ -38,8 +38,8 @@ PARALLEL SAFE;
 
 COMMENT ON FUNCTION public.countries_name IS 'Filters the countries table by the initial letters of the name using the "name_prefix" parameter.';`
 export default () => {
-  const intl = useIntl();
-  const [code, useCode] = useState(defaultCode)
+  // const intl = useIntl();
+  const [code,useCode] = useState(defaultCode)
   return (
     <PageContainer>
       <Card>
@@ -69,8 +69,7 @@ export default () => {
           </Col>
           <Col span={2} offset={2}>
             <Button.Group>
-              {/*<Button type='primary'>验证</Button>*/}
-              <Button type='primary'>发布</Button>
+              <Button type='primary' onClick={()=>useCode()}>发布</Button>
             </Button.Group>
           </Col>
         </Row>

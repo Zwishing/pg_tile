@@ -1,8 +1,8 @@
 import mapboxgl from 'mapbox-gl';
 import { Modal, Row, Col, Table } from 'antd';
-import { useEffect,useContext } from 'react';
+import { useEffect,useRef} from 'react';
 import defaultSetting from '../../../config/defaultSettings';
-import style from './index.less';
+// import style from './index.less';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiemhhbmd3aXNoaW5nIiwiYSI6ImNrcDZhNnZjNzAxMGUyb3MwYmdndzB0c20ifQ.gv8bWHnPA3mj1n_AxyA2vA';
 
@@ -27,12 +27,12 @@ export default (props) => {
         {
             key:0,
             name:'名称',
-            value:mapInfo.cname,
+            value:mapInfo.id,
         },
         {
             key:1,
             name:'图层名称',
-            value:mapInfo.layer,
+            value:mapInfo.id,
         },
         {
             key:2,
@@ -86,9 +86,11 @@ export default (props) => {
         borderRadius: '5px',
     };
 
+    const mapRef = useRef(null);
+
     useEffect(() => {
         const map = new mapboxgl.Map({
-            'container': 'map',
+            'container': mapRef.current,
             // 'zoom': 3,
             'center': mapInfo.center,
             'bounds': mapInfo.bounds,
@@ -125,7 +127,7 @@ export default (props) => {
                         'type': 'line',
                         'source': 'postgis-tiles',
                         // ST_AsMVT() uses 'default' as layer name
-                        'source-layer': mapInfo.layer,
+                        'source-layer': mapInfo.id,
                         'minzoom': 0,
                         'maxzoom': 22,
                         'paint': {
@@ -141,13 +143,13 @@ export default (props) => {
         map.addControl(new mapboxgl.ScaleControl,'bottom-left');
 
       // eslint-disable-next-line no-underscore-dangle,no-unused-expressions
-        map._logoControl && map.removeControl(map._logoControl);//去掉 mapbox logo
+        map._logoControl && map.removeControl(map._logoControl);// 去掉 mapbox logo
 
     }, []);
 
     return (
         <Modal
-            title={<strong>{mapInfo.cname}矢量瓦片</strong>}
+            title={<strong>{mapInfo.id}矢量瓦片</strong>}
             visible={id !== -1}
             width={1200}
             centered={true}
@@ -171,7 +173,7 @@ export default (props) => {
                 <Col
                     span={16}
                     style={border}>
-                    <div id={'map'} style={{ height: 500 }} />
+                    <div ref={mapRef} style={{ height: 500 }} />
                 </Col>
             </Row>
 
